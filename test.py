@@ -3,7 +3,7 @@ from matrixandvectors import matrix
 from matrixandvectors import vector
 
 
-def solution(x, y, k):
+def real_u(x, y, k):
     if k == 0:
         return math.sin(math.pi*x)*math.sin(math.pi*y)
     else:
@@ -11,11 +11,41 @@ def solution(x, y, k):
             return (1 - x)*x*(1 - y)*y
 
 
+def real_wx(x, y, k):
+    if k == 0:
+        return math.pi*math.cos(math.pi*x)*math.sin(math.pi*y)
+    else:
+        if k == 1:
+            return (1 - 2*x)*(1 - y)*y
+
+
+def real_wy(x, y, k):
+    if k == 0:
+        return math.pi*math.sin(math.pi*x)*math.cos(math.pi*y)
+    else:
+        if k == 1:
+            return (1 - 2*y)*(1 - x)*x
+
+
 def def_real_u(u, k):
     u.clear()
     for i in xrange(u.line):
         for j in xrange(u.col):
-            u.data[i][j] = solution(hx*j+hx/2, hy*i+hy/2, k)
+            u.data[i][j] = real_u(hx*j+hx/2, hy*i+hy/2, k)
+
+
+def def_real_wx(u, k):
+    u.clear()
+    for i in xrange(u.line):
+        for j in xrange(u.col):
+            u.data[i][j] = real_wx(hx*j+hx/2, hy*i+hy/2, k)
+
+
+def def_real_wy(u, k):
+    u.clear()
+    for i in xrange(u.line):
+        for j in xrange(u.col):
+            u.data[i][j] = real_wy(hx*j+hx/2, hy*i+hy/2, k)
 
 
 def corrector_x(u, b1, b2, a1, a2):
@@ -93,6 +123,9 @@ tao = 1/float(amntt)
 w_x = matrix(amnty, amntx + 1)
 w_y = matrix(amnty + 1, amntx)
 u = matrix(amnty, amntx)
+realu = matrix(amnty, amntx)
+realw_x = matrix(amnty, amntx + 1)
+realw_y = matrix(amnty + 1, amntx)
 
 def_real_u(u, solution_number)
 print "U"
